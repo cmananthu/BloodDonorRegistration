@@ -19,5 +19,17 @@ public class BloodDonorRegistrationUtil {
 		entity.setPassWord(dao.getPassWord());
 		return entity ;
 	}
+	
+	//converts entity to dao
+		public static BloodDonorRegistrationDAO createBloodDonorRegistraionDao(BloodDonorRegistrationEntity e) {
+			BloodDonorRegistrationDAO d=new BloodDonorRegistrationDAO();
+			d.setId(e.getId());
+			d.setDonorName(e.getDonorName());
+			d.setEmail(e.getEmail());
+			d.setPhoneNumber(e.getPhoneNumber());
+			//entity.setPassWord(encoder.encode(dao.getPassWord()));
+			d.setPassWord(e.getPassWord());
+			return d ;
+		}
 
 }

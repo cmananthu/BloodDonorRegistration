@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.bloodDonorRegistration.Util.BloodDonorRegistrationUtil;
 import com.project.bloodDonorRegistration.entity.BloodDonorRegistrationDAO;
 import com.project.bloodDonorRegistration.entity.BloodDonorRegistrationEntity;
+import com.project.bloodDonorRegistration.exceptions.UserAlreadyFoundException;
 import com.project.bloodDonorRegistration.repository.BloodDonorRegistrationRepository;
 import com.project.bloodDonorRegistration.service.BloodDonorRegistrationService;
 
@@ -26,11 +27,39 @@ public class BloodDonorRegistrationServiceImpl implements BloodDonorRegistration
 	//method to add a new donor
 	//Util class convert front end data to back end data
 	@Override
-	public void registerNewDonor(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) {
+	public void registerNewDonor(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) throws UserAlreadyFoundException {
+		
+		BloodDonorRegistrationEntity ety= repo.findByEmail(bloodDonorRegistrationDAO.getEmail());
+		if(ety==null) {
 		BloodDonorRegistrationEntity entity=BloodDonorRegistrationUtil.createBloodDonorRegistraionEntity(bloodDonorRegistrationDAO);
 		
 		repo.save(entity);
+		}else
+			throw  new UserAlreadyFoundException("This user is already registered");
 	}
+
+	@Override
+	public boolean getAuthentication(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) {
+		if(bloodDonorRegistrationDAO.getEmail()!="" && bloodDonorRegistrationDAO.getPassWord()!="") {
+		BloodDonorRegistrationEntity ety= repo.findByEmail(bloodDonorRegistrationDAO.getEmail());
+		if(ety!=null) {
+		BloodDonorRegistrationDAO dao=BloodDonorRegistrationUtil.createBloodDonorRegistraionDao(ety);
+		
+		String s2=bloodDonorRegistrationDAO.getPassWord();
+		if( dao.getPassWord().equals(s2))
+			return true;
+		else
+			return false;
+		
+		}else
+			return false;
+		}else {
+			return false;
+		}
+		
+	}
+	
+	
 
 
 }
