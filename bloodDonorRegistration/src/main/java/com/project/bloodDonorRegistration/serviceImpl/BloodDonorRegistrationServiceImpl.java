@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.project.bloodDonorRegistration.Util.BloodDonorRegistrationUtil;
 import com.project.bloodDonorRegistration.entity.BloodDonorRegistrationDAO;
@@ -57,6 +58,32 @@ public class BloodDonorRegistrationServiceImpl implements BloodDonorRegistration
 			return false;
 		}
 		
+	}
+
+	@Override
+	public Object getMyProfile(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) {
+		Object obj=null;
+		if(bloodDonorRegistrationDAO.getEmail()!="" && bloodDonorRegistrationDAO.getPassWord()!="") {
+			BloodDonorRegistrationEntity ety= repo.findByEmail(bloodDonorRegistrationDAO.getEmail());
+			if(ety!=null) {
+			BloodDonorRegistrationDAO dao=BloodDonorRegistrationUtil.createBloodDonorRegistraionDao(ety);
+			
+			String s2=bloodDonorRegistrationDAO.getPassWord();
+			if( dao.getPassWord().equals(s2)) {
+		
+				String email=bloodDonorRegistrationDAO.getEmail();
+				 String url="http://localhost:8085/bloodbank/myprofile/"+email;
+				 RestTemplate restTemplate = new RestTemplate();
+				 obj=restTemplate.getForEntity(url, Object.class); 
+				
+				
+			}else {
+				obj="password incorrect";
+			}
+			}
+		}
+		return obj;
+				
 	}
 	
 	

@@ -36,6 +36,13 @@ public class BloodDonorRegistrationController {
 		
 		return service.getAuthentication(dao);
 	}
+	
+	@PostMapping("/myprofile")
+	public Object getMyprofile( @Validated @RequestBody BloodDonorRegistrationDAO dao){
+		
+		return service.getMyProfile(dao);
+	}
+	
 	@GetMapping("/hello")
 	public String helo() {
 		return "hello";

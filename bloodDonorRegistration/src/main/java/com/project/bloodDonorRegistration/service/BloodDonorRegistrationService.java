@@ -12,4 +12,5 @@ import com.project.bloodDonorRegistration.exceptions.UserAlreadyFoundException;
 public interface BloodDonorRegistrationService {
 	void registerNewDonor(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) throws UserAlreadyFoundException ;
 	boolean getAuthentication(BloodDonorRegistrationDAO bloodDonorRegistrationDAO) ;
+	Object getMyProfile(BloodDonorRegistrationDAO bloodDonorRegistrationDAO);
 }
