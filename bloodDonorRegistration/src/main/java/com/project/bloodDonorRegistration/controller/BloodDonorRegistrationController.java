@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.bloodDonorRegistration.entity.BloodDonorRegistrationDAO;
 import com.project.bloodDonorRegistration.exceptions.UserAlreadyFoundException;
 import com.project.bloodDonorRegistration.service.BloodDonorRegistrationService;
+import com.project.bloodDonorRegistration.serviceImpl.BloodDonorRegistrationServiceImpl;
 
 @CrossOrigin("*")
 @RestController
